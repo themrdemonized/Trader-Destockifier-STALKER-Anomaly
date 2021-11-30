@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<string_table>
+	
+	<string id="ui_mcm_trader_destockifier_title">
+		<text>Лимитатор товаров на продажу</text>
+	</string>
+	<string id="ui_mcm_menu_trader_destockifier">
+		<text>Лимит товаров</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_debug_mode">
+		<text>Режим отладки</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_debug_mode_desc">
+		<text>Включает спам сообщений в консоли</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_guns">
+		<text>Макс кол-во огнестрельного оружия на складе</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_knives">
+		<text>Макс кол-во холодного оружия на складе</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_outfits">
+		<text>Макс кол-во экипировки на складе</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_weapon_attachments">
+		<text>Макс кол-во навесного оборудования для оружия</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_backpacks">
+		<text>Макс кол-во рюкзаков на складе</text>
+	</string>
+	
+</string_table>

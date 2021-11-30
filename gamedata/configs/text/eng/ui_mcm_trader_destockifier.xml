@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<string_table>
+	
+	<string id="ui_mcm_trader_destockifier_title">
+		<text>Trader Destockifier</text>
+	</string>
+	<string id="ui_mcm_menu_trader_destockifier">
+		<text>Trader Destock</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_debug_mode">
+		<text>Debug Mode</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_debug_mode_desc">
+		<text>Enables message spam in console</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_guns">
+		<text>Max amount of weapons in stock</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_knives">
+		<text>Max amount of knives in stock</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_outfits">
+		<text>Max amount of outfits in stock</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_weapon_attachments">
+		<text>Max amount of weapon attachments in stock</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_backpacks">
+		<text>Max amount of backpacks in stock</text>
+	</string>
+	
+</string_table>
