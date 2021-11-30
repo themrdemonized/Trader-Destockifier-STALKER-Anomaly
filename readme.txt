@@ -1,3 +1,4 @@
+Trader Destockifier
 Tired of traders being legal spawners? This mod might be for you.
 
 Introducing Trader Destockifier: very simple mod that limits the amount of items each trader can have in stock at the time of restock
