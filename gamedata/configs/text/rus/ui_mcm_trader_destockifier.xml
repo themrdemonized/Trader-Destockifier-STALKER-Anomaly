@@ -36,5 +36,14 @@
 	<string id="ui_mcm_trader_destockifier_max_backpacks">
 		<text>Макс кол-во рюкзаков на складе</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_max_explosives">
+		<text>Макс кол-во взрывчатки (гранаты, подствольники, выстрелы к РПГ) на складе</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_ammo_percent">
+		<text>Процент аммуниции от изначального ассортимента</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_sell_only_guns_ammo">
+		<text>Продавать только аммуницию к оружию в ассортименте</text>
+	</string>
 	
 </string_table>

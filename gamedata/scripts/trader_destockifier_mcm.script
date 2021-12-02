@@ -7,10 +7,13 @@ function on_mcm_load()
 	    	{id = "max_items_help", type = "desc", clr = {200, 200, 255, 200}, text = "ui_mcm_trader_destockifier_max_items_help"},
 	    	{id = "divider", type = "line"},
 	        {id = "max_guns", type = "track", val = 2, min = -1, max = 6, step = 1, def = 3},
-	        {id = "max_knives", type = "track", val = 2, min = -1, max = 6, step = 1, def = 2},
 	        {id = "max_weapon_attachments", type = "track", val = 2, min = -1, max = 6, step = 1, def = 2},
+	        {id = "max_knives", type = "track", val = 2, min = -1, max = 6, step = 1, def = 2},
+	        {id = "max_explosives", type = "track", val = 2, min = -1, max = 10, step = 1, def = 6},
 	        {id = "max_outfits", type = "track", val = 2, min = -1, max = 6, step = 1, def = 3},
 	        {id = "max_backpacks", type = "track", val = 2, min = -1, max = 6, step = 1, def = 2},
+	        {id = "sell_only_guns_ammo", type = "check", val = 1, def = false},
+	        {id = "max_ammo_percent", type = "track", val = 2, min = 0, max = 100, step = 10, def = 100},
 	    }
     }
     return op

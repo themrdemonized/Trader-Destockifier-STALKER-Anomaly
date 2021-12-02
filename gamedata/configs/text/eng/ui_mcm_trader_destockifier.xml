@@ -36,5 +36,14 @@
 	<string id="ui_mcm_trader_destockifier_max_backpacks">
 		<text>Max amount of backpacks in stock</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_max_explosives">
+		<text>Max amount of explosives (grenades, rockets) in stock</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_ammo_percent">
+		<text>Max percent of ammo from initial stock to sell</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_sell_only_guns_ammo">
+		<text>Sell ammo only for guns in stock</text>
+	</string>
 	
 </string_table>
