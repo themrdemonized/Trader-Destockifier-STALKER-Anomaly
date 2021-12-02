@@ -14,6 +14,13 @@
 	<string id="ui_mcm_trader_destockifier_debug_mode_desc">
 		<text>Включает спам сообщений в консоли</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_max_items_help">
+		<text>
+			Ниже вы можете определить максимальное количество предметов, которое может быть у каждого торговца после пополнения запасов.\n
+			Если установить ползунок на 0, то предметы в группе будут полностью удалены.\n
+			Если установить ползунок на -1, то мод не удалит ни один предмет из этой группы.\n
+		</text>
+	</string>
 	<string id="ui_mcm_trader_destockifier_max_guns">
 		<text>Макс кол-во огнестрельного оружия на складе</text>
 	</string>

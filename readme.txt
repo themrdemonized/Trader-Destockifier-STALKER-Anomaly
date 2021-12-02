@@ -3,7 +3,7 @@ Tired of traders being legal spawners? This mod might be for you.
 
 Introducing Trader Destockifier: very simple mod that limits the amount of items each trader can have in stock at the time of restock
 
-The mod comes with MCM options to adjust those values. You can lower each entry to 1, or bump them up to 6. The effect will apply after trader restock.
+The mod comes with MCM options to adjust those values.
 
 If you combine the mod with other's, which alters loot for example Outfit Chance to Drop, you can get pretty interesting change in gameplay mechanics
 

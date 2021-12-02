@@ -14,6 +14,13 @@
 	<string id="ui_mcm_trader_destockifier_debug_mode_desc">
 		<text>Enables message spam in console</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_max_items_help">
+		<text>
+			Below you can define the maximum amount of items each trader can have after restock.\n
+			Setting slider to 0 will completely remove items in a group.\n
+			Setting slider to -1 will ignore items in a group and won't remove anything.\n
+		</text>
+	</string>
 	<string id="ui_mcm_trader_destockifier_max_guns">
 		<text>Max amount of weapons in stock</text>
 	</string>
