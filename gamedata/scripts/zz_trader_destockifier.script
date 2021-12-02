@@ -37,6 +37,9 @@ local settings = {
 	max_explosives = 6,
 	max_ammo_percent = 100,
 	sell_only_guns_ammo = false,
+	max_food = 10,
+	max_heal = 8,
+	max_repair = 8,
 }
 
 --Utils
@@ -190,9 +193,9 @@ local items = {
 	end),
 	weapon_attachments = create_items_table("weapon_attachments", "max_weapon_attachments", function(item)
 		local sec = item:section()
-		return 	SYS_GetParam(0, sec, "kind", 0) == "w_misc"
-				and sec ~= "bolt"
-				and sec ~= "bolt_bullet"
+		return 	SYS_GetParam(0, sec, "kind", 0) == "w_misc" and 
+				sec ~= "bolt" and
+				sec ~= "bolt_bullet"
 	end),
 	backpacks = create_items_table("backpacks", "max_backpacks", function(item)
 		return SYS_GetParam(0, item:section(), "kind", 0) == "i_backpack"
@@ -208,8 +211,34 @@ local items = {
 			["S_VOG25"]             = true,
 	        ["S_OG7B"]              = true,
 		}
-		return 	valid_items[SYS_GetParam(0, sec, "class", 0)]
-				or valid_items[SYS_GetParam(0, sec, "kind", 0)]
+		return 	valid_items[SYS_GetParam(0, sec, "class", 0)] or
+				valid_items[SYS_GetParam(0, sec, "kind", 0)]
+	end),
+	food = create_items_table("food", "max_food", function(item)
+		local sec = item:section()
+		local valid_items = {
+			["i_drink"] 		= true,
+			["i_food"]			= true,
+			["i_mutant_cooked"]	= true,
+		}
+		return 	valid_items[SYS_GetParam(0, sec, "kind", 0)]
+	end),
+	heal = create_items_table("heal", "max_heal", function(item)
+		local sec = item:section()
+		local valid_items = {
+			["i_medical"] 		= true,
+		}
+		return 	valid_items[SYS_GetParam(0, sec, "kind", 0)]
+	end),
+	repair = create_items_table("repair", "max_repair", function(item)
+		local sec = item:section()
+		local valid_items = {
+			["i_repair"] 		= true,
+			["i_tool"] 			= true,
+			["i_kit"] 			= true,
+		}
+		return 	valid_items[SYS_GetParam(0, sec, "kind", 0)] and
+				sec ~= "bolts_pack"
 	end),
 }
 
@@ -232,29 +261,102 @@ local items_after = {
 }
 
 -- Special functions for certain groups
--- Explosives
-items.explosives.collect = function(self, npc, item)
-	if self.check(item) then
+local function collect_by_id(t, npc, item)
+	if t.check(item) then
 		local sec = item:section()
 		local id = item:id()
-		trace("collecting %s %s, id %s", self.key, sec, id)
-		self.trader[id] = true
-		item_cache[sec] = self.key
+		trace("collecting %s %s, id %s", t.key, sec, id)
+		t.trader[id] = true
+		item_cache[sec] = t.key
 	end
 end
 
-items.explosives.remove = function(self, npc, item)
-	if settings[self.max_key] == -1 then
-		trace("Maximum for %s set to -1, not removing", self.max_key)
+local function pick_by_mechanic(t, npc, trader_type, reduction_coeff)
+	if is_empty(t.trader) then
+		trace("%s table is empty, ignoring", t.key)
+		return
+	end
+
+	local trader = dup_table(t.trader)
+	local max = settings[t.max_key] or 0
+	local reduction_coeff = reduction_coeff or 0.5
+
+	if trader_autoinject.get_trader_type(npc) ~= trader_type then
+		max = floor(max * reduction_coeff)
+	end
+
+	local i = 0
+	while i < max and is_not_empty(t.trader) do
+		local item = get_random_key_value(t.trader, true)
+		trace("picked %s", t.key)
+		for k, v in pairs(item) do
+			trace("picked %s %s, id %s", t.key, k, v)
+			t.keep[k] = v
+		end
+		i = i + 1
+	end
+end
+
+local function remove_by_id(t, npc, item)
+	if settings[t.max_key] == -1 then
+		trace("Maximum for %s set to -1, not removing", t.max_key)
 		return
 	end
 
 	local sec = item:section()
 	local id = item:id()
-	if self.check(item) and not self.keep[id] then
-		trace("%s is not in the picked table, removing. %s, id %s", self.key, sec, id)
+	if t.check(item) and not t.keep[id] then
+		trace("%s is not in the picked table, removing. %s, id %s", t.key, sec, id)
 		alife_release(item)
 	end
+end
+
+-- Explosives
+items.explosives.collect = function(self, npc, item)
+	collect_by_id(self, npc, item)
+end
+
+items.explosives.remove = function(self, npc, item)
+	remove_by_id(self, npc, item)
+end
+
+-- Food
+items.food.collect = function(self, npc, item)
+	collect_by_id(self, npc, item)
+end
+
+items.food.pick = function(self, npc)
+	pick_by_mechanic(self, npc, trader_autoinject.BARMAN)
+end
+
+items.food.remove = function(self, npc, item)
+	remove_by_id(self, npc, item)
+end
+
+-- Medical
+items.heal.collect = function(self, npc, item)
+	collect_by_id(self, npc, item)
+end
+
+items.heal.pick = function(self, npc)
+	pick_by_mechanic(self, npc, trader_autoinject.MEDIC)
+end
+
+items.heal.remove = function(self, npc, item)
+	remove_by_id(self, npc, item)
+end
+
+-- Repair
+items.repair.collect = function(self, npc, item)
+	collect_by_id(self, npc, item)
+end
+
+items.repair.pick = function(self, npc)
+	pick_by_mechanic(self, npc, trader_autoinject.MECHANIC)
+end
+
+items.repair.remove = function(self, npc, item)
+	remove_by_id(self, npc, item)
 end
 
 -- Ammo
@@ -382,10 +484,17 @@ local collect_trader_items_after = create_items_after_function("collect", npc, i
 local pick_items_after = create_items_after_function("pick", npc)
 local remove_trader_items_after = create_items_after_function("remove", npc, item)
 
+local valid_traders = {
+	[trader_autoinject.SUPPLIER] = true,
+	[trader_autoinject.BARMAN] = true,
+	[trader_autoinject.MECHANIC] = true,
+	[trader_autoinject.MEDIC] = true,
+}
+
 function destockify(npc)
-	local is_trader = trader_autoinject.get_trader_type(npc) == trader_autoinject.SUPPLIER
-	if not is_trader then
-		trace("npc %s is not trader", npc:name())
+	local trader = trader_autoinject.get_trader_type(npc)
+	if not valid_traders[trader] then
+		trace("npc %s, %s is not trader", npc:name(), npc:id())
 		return
 	end
 

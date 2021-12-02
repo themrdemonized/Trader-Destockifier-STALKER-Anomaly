@@ -14,6 +14,10 @@ function on_mcm_load()
 	        {id = "max_backpacks", type = "track", val = 2, min = -1, max = 6, step = 1, def = 2},
 	        {id = "sell_only_guns_ammo", type = "check", val = 1, def = false},
 	        {id = "max_ammo_percent", type = "track", val = 2, min = 0, max = 100, step = 10, def = 100},
+	        {id = "divider", type = "line"},
+	        {id = "max_food", type = "track", val = 2, min = -1, max = 15, step = 1, def = 10},
+	        {id = "max_heal", type = "track", val = 2, min = -1, max = 15, step = 1, def = 8},
+	        {id = "max_repair", type = "track", val = 2, min = -1, max = 15, step = 1, def = 8},
 	    }
     }
     return op

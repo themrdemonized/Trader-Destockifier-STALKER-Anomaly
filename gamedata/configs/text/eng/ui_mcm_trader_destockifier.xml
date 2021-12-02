@@ -45,5 +45,23 @@
 	<string id="ui_mcm_trader_destockifier_sell_only_guns_ammo">
 		<text>Sell ammo only for guns in stock</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_max_food">
+		<text>Max amount of eatables (food, drinks, cigarettes) in stock.</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_food_desc">
+		<text>Non-barman traders will have 50% less than defined amount</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_heal">
+		<text>Max amount of medical items in stock.</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_heal_desc">
+		<text>Non-medic traders will have 50% less than defined amount</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_repair">
+		<text>Max amount of repair items in stock.</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_repair_desc">
+		<text>Non-mechanic traders will have 50% less than defined amount</text>
+	</string>
 	
 </string_table>

@@ -45,5 +45,23 @@
 	<string id="ui_mcm_trader_destockifier_sell_only_guns_ammo">
 		<text>Продавать только аммуницию к оружию в ассортименте</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_max_food">
+		<text>Макс кол-во еды, напитков, сигарет на складе</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_food_desc">
+		<text>Не бармены получат на 50% меньше предметов</text>
+	</string>
+		<string id="ui_mcm_trader_destockifier_max_heal">
+		<text>Макс кол-во медицины на складе</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_heal_desc">
+		<text>Не медики получат на 50% меньше предметов</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_repair">
+		<text>Макс кол-во ремкомплектов на складе</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_repair_desc">
+		<text>Не механики получат на 50% меньше предметов</text>
+	</string>
 	
 </string_table>
