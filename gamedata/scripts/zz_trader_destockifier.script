@@ -120,7 +120,7 @@ local function pick_item(trader, keep, max_key, key) -- default pick item functi
 		trace("%s table is empty, ignoring", key)
 		return
 	end
-
+	local trader = dup_table(trader)
 	local max = settings[max_key] or 0
 	local i = 0
 	while i < max and is_not_empty(trader) do
@@ -142,7 +142,6 @@ local function create_items_table(key, max_key, check_func, collect_func, pick_f
 		key = key or "item",
 		max_key = max_key,
 		trader = {},
-		trader_initial = {},
 		keep = {},
 		get_keep_item_id = function(self, item)
 			return self.keep[item:section()] or 0
@@ -156,7 +155,6 @@ local function create_items_table(key, max_key, check_func, collect_func, pick_f
 				local id = item:id()
 				trace("collecting %s %s, id %s", self.key, sec, id)
 				self.trader[sec] = id
-				self.trader_initial[sec] = id
 				item_cache[sec] = self.key
 			end
 		end,
@@ -264,7 +262,7 @@ items_after.ammo.collect = function(self, npc, item)
 	if self.check(item) then
 		local sec = item:section()
 		local id = item:id()
-		trace("collecting %s %s, id %s", self.key, sec, id)
+		--trace("collecting %s %s, id %s", self.key, sec, id)
 		if not self.trader[sec] then 
 			self.trader[sec] = {
 				section = sec,
@@ -287,12 +285,12 @@ items_after.ammo.pick = function(self, npc)
 			valid_items[k] = true
 		end
 	else
-		trace("only guns ammo set, picking")
-		for sec, id in pairs(settings.max_guns == -1 and items.guns.trader_initial or items.guns.keep) do
+		--trace("only guns ammo set, picking")
+		for sec, id in pairs(settings.max_guns == -1 and items.guns.trader or items.guns.keep) do
 			local ammo = get_ammo(sec, id, true)
             for k, a in pairs(ammo) do
             	if self.trader[k] then
-            		trace("ammo %s is for gun %s, picking", k, sec)
+            		--trace("ammo %s is for gun %s, picking", k, sec)
             		valid_items[k] = true
             	end
             end
@@ -305,12 +303,12 @@ items_after.ammo.pick = function(self, npc)
 			self.keep[k] = {}
 			local count = round(#v.ids * max)
 			for i = 1, count do
-				trace("picked %s %s, id %s", self.key, k, v.ids[i])
+				--trace("picked %s %s, id %s", self.key, k, v.ids[i])
 				self.keep[k][v.ids[i]] = true
 			end
 		end
 	end
-	trace_table(self.keep)
+	--trace_table(self.keep)
 end
 
 items_after.ammo.remove = function(self, npc, item)
@@ -331,12 +329,10 @@ end
 local function reset_trader_items()
 	for k, v in pairs(items) do
 		empty_table(v.trader)
-		empty_table(v.trader_initial)
 		empty_table(v.keep)
 	end
 	for k, v in pairs(items_after) do
 		empty_table(v.trader)
-		empty_table(v.trader_initial)
 		empty_table(v.keep)
 	end
 end
@@ -411,7 +407,7 @@ TraderAuto = trader_autoinject.update
 function trader_autoinject.update(npc)
     TraderAuto(npc)
     --nasty hack to make it last in monkey patching order
-	CreateTimeEvent("destockify" .. npc:name(), "destockify" .. npc:name(), 0, destockify, npc)
+	CreateTimeEvent("destockify" .. npc:id(), "destockify" .. npc:id(), 0.05, destockify, npc)
     --destockify(npc)
 end
 
