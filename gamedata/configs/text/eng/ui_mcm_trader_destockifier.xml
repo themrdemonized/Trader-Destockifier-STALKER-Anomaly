@@ -8,6 +8,9 @@
 	<string id="ui_mcm_menu_trader_destockifier">
 		<text>Trader Destock</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_enable">
+		<text>Enable</text>
+	</string>
 	<string id="ui_mcm_trader_destockifier_debug_mode">
 		<text>Debug Mode</text>
 	</string>
@@ -67,7 +70,16 @@
 		<text>Randomize</text>
 	</string>
 	<string id="ui_mcm_trader_destockifier_randomize_desc">
-		<text>The amount of items will fluctuate between 0 and double of amount defined</text>
+		<text>The amount of items will fluctuate from defined amount in MCM</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_randomize_deviation">
+		<text>Randomize deviation (%)</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_randomize_deviation_desc">
+		<text>
+			100% - items fluctuate between 0 and 2x amount\n
+			50% - items fluctuate between 0.5x and 1.5x amount
+		</text>
 	</string>
 	
 </string_table>

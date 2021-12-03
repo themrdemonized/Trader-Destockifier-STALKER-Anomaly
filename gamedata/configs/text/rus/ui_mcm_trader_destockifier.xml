@@ -8,6 +8,9 @@
 	<string id="ui_mcm_menu_trader_destockifier">
 		<text>Лимит товаров</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_enable">
+		<text>Включить</text>
+	</string>
 	<string id="ui_mcm_trader_destockifier_debug_mode">
 		<text>Режим отладки</text>
 	</string>
@@ -67,7 +70,16 @@
 		<text>Рандомизировать</text>
 	</string>
 	<string id="ui_mcm_trader_destockifier_randomize_desc">
-		<text>Количество предметов будет варьироваться от 0 до двойного количества, заданного в MCM</text>
+		<text>Количество предметов будет варьироваться от кол-ва, заданного в MCM</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_randomize_deviation">
+		<text>Диапазон рандомизации</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_randomize_deviation_desc">
+		<text>
+			100% - предметы рандомизируются между 0 и 2x кол-ва\n
+			50% - предметы рандомизируются между 0.5x и 1.5x кол-ва
+		</text>
 	</string>
 	
 </string_table>

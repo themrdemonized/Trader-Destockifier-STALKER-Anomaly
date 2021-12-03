@@ -30,6 +30,7 @@ end
 local table_insert = table.insert
 
 local settings = {
+	enable = true,
 	debug_mode = false,
 	max_guns = 3,
 	max_knives = 2,
@@ -43,6 +44,7 @@ local settings = {
 	max_heal = 8,
 	max_repair = 8,
 	randomize = false,
+	randomize_deviation = 100,
 }
 
 --Utils
@@ -129,7 +131,8 @@ local function pick_item(trader, keep, max_key, key) -- default pick item functi
 	local trader = dup_table(trader)
 	local trader_max = settings[max_key] or 0
 	if settings.randomize then
-		trader_max = trader_max + random(-trader_max, trader_max)
+		local deviation = settings.randomize_deviation * 0.01
+		trader_max = trader_max + random(round(-trader_max * deviation), round(trader_max * deviation))
 	end
 	local i = 0
 	while i < trader_max and is_not_empty(trader) do
@@ -292,7 +295,8 @@ local function pick_by_mechanic(t, npc, trader_type, reduction_coeff)
 	end
 
 	if settings.randomize then
-		trader_max = trader_max + random(-trader_max, trader_max)
+		local deviation = settings.randomize_deviation * 0.01
+		trader_max = trader_max + random(round(-trader_max * deviation), round(trader_max * deviation))
 	end
 
 	local i = 0
@@ -411,7 +415,8 @@ items_after.ammo.pick = function(self, npc)
 
 	local trader_max = settings[self.max_key] or 100
 	if settings.randomize then
-		trader_max = min(trader_max + random(-trader_max, trader_max), 100)
+		local deviation = settings.randomize_deviation * 0.01
+		trader_max = min(trader_max + random(round(-trader_max * deviation), round(trader_max * deviation)), 100)
 	end
 	trader_max = trader_max * 0.01
 	for k, v in pairs(self.trader) do
@@ -529,9 +534,11 @@ end
 TraderAuto = trader_autoinject.update
 function trader_autoinject.update(npc)
     TraderAuto(npc)
-    --nasty hack to make it last in monkey patching order
-	CreateTimeEvent("destockify" .. npc:id(), "destockify" .. npc:id(), 0.05, destockify, npc)
-    --destockify(npc)
+    if settings.enable then
+	    --nasty hack to make it last in monkey patching order
+		CreateTimeEvent("destockify" .. npc:id(), "destockify" .. npc:id(), 0.05, destockify, npc)
+	    --destockify(npc)
+	end
 end
 
 local function on_option_change()
