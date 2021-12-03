@@ -63,5 +63,11 @@
 	<string id="ui_mcm_trader_destockifier_max_repair_desc">
 		<text>Не механики получат на 50% меньше предметов</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_randomize">
+		<text>Рандомизировать</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_randomize_desc">
+		<text>Количество предметов будет варьироваться от 0 до двойного количества, заданного в MCM</text>
+	</string>
 	
 </string_table>

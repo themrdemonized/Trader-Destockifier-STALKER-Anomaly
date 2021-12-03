@@ -63,5 +63,11 @@
 	<string id="ui_mcm_trader_destockifier_max_repair_desc">
 		<text>Non-mechanic traders will have 50% less than defined amount</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_randomize">
+		<text>Randomize</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_randomize_desc">
+		<text>The amount of items will fluctuate between 0 and double of amount defined</text>
+	</string>
 	
 </string_table>

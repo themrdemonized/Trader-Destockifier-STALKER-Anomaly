@@ -19,6 +19,8 @@ local type = type
 local get_ammo = utils_item.get_ammo
 
 local floor = math.floor
+local max = math.max
+local min = math.min
 local random = math.random
 
 local function round(num)
@@ -40,6 +42,7 @@ local settings = {
 	max_food = 10,
 	max_heal = 8,
 	max_repair = 8,
+	randomize = false,
 }
 
 --Utils
@@ -124,9 +127,12 @@ local function pick_item(trader, keep, max_key, key) -- default pick item functi
 		return
 	end
 	local trader = dup_table(trader)
-	local max = settings[max_key] or 0
+	local trader_max = settings[max_key] or 0
+	if settings.randomize then
+		trader_max = trader_max + random(-trader_max, trader_max)
+	end
 	local i = 0
-	while i < max and is_not_empty(trader) do
+	while i < trader_max and is_not_empty(trader) do
 		local item = get_random_key_value(trader, true)
 		trace("picked %s", key)
 		for k, v in pairs(item) do
@@ -278,15 +284,19 @@ local function pick_by_mechanic(t, npc, trader_type, reduction_coeff)
 	end
 
 	local trader = dup_table(t.trader)
-	local max = settings[t.max_key] or 0
+	local trader_max = settings[t.max_key] or 0
 	local reduction_coeff = reduction_coeff or 0.5
 
 	if trader_autoinject.get_trader_type(npc) ~= trader_type then
-		max = floor(max * reduction_coeff)
+		trader_max = floor(trader_max * reduction_coeff)
+	end
+
+	if settings.randomize then
+		trader_max = trader_max + random(-trader_max, trader_max)
 	end
 
 	local i = 0
-	while i < max and is_not_empty(t.trader) do
+	while i < trader_max and is_not_empty(t.trader) do
 		local item = get_random_key_value(t.trader, true)
 		trace("picked %s", t.key)
 		for k, v in pairs(item) do
@@ -399,11 +409,15 @@ items_after.ammo.pick = function(self, npc)
         end
 	end
 
-	local max = (settings[self.max_key] or 100) * 0.01
+	local trader_max = settings[self.max_key] or 100
+	if settings.randomize then
+		trader_max = min(trader_max + random(-trader_max, trader_max), 100)
+	end
+	trader_max = trader_max * 0.01
 	for k, v in pairs(self.trader) do
 		if valid_items[k] then
 			self.keep[k] = {}
-			local count = round(#v.ids * max)
+			local count = round(#v.ids * trader_max)
 			for i = 1, count do
 				--trace("picked %s %s, id %s", self.key, k, v.ids[i])
 				self.keep[k][v.ids[i]] = true
