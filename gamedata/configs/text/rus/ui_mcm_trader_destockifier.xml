@@ -81,5 +81,13 @@
 			50% - предметы рандомизируютс€ между 0.5x и 1.5x кол-ва
 		</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_compatibility_help">
+		<text>
+			Ќиже вы можете определить максимальное количество предметов дл€ других модов\n
+		</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_mags">
+		<text>ћакс кол-во магазинов на складе (Mags Redux)</text>
+	</string>
 	
 </string_table>

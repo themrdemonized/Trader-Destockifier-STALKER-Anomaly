@@ -81,5 +81,13 @@
 			50% - items fluctuate between 0.5x and 1.5x amount
 		</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_compatibility_help">
+		<text>
+			Below you can define the amount for items some mods use\n
+		</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_mags">
+		<text>Max amount of magazines in stock. (Mags Redux)</text>
+	</string>
 	
 </string_table>

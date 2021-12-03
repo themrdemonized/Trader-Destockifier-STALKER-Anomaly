@@ -45,6 +45,7 @@ local settings = {
 	max_repair = 8,
 	randomize = false,
 	randomize_deviation = 100,
+	max_mags = 5,
 }
 
 --Utils
@@ -249,6 +250,10 @@ local items = {
 		return 	valid_items[SYS_GetParam(0, sec, "kind", 0)] and
 				sec ~= "bolts_pack"
 	end),
+	-- Mags Redux
+	mags = create_items_table("mags", "max_mags", function(item)
+		return SYS_GetParam(1, item:section(), "is_mag", false)
+	end),
 }
 
 -- Process items after main destockify
@@ -265,7 +270,9 @@ local items_after = {
 			["S_VOG25"]             = true,
 	        ["S_OG7B"]              = true,
 		}
-		return IsAmmo(item) and not	ignore_items[SYS_GetParam(0, sec, "class", 0)]
+		return 	IsAmmo(item) and
+				not ignore_items[SYS_GetParam(0, sec, "class", 0)] and
+				SYS_GetParam(1, sec, "is_mag", false) ~= true
 	end),
 }
 
@@ -370,6 +377,15 @@ items.repair.pick = function(self, npc)
 end
 
 items.repair.remove = function(self, npc, item)
+	remove_by_id(self, npc, item)
+end
+
+-- Mags
+items.mags.collect = function(self, npc, item)
+	collect_by_id(self, npc, item)
+end
+
+items.mags.remove = function(self, npc, item)
 	remove_by_id(self, npc, item)
 end
 
