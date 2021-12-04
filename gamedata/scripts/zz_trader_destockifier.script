@@ -530,7 +530,7 @@ function destockify(npc)
 	local trader = trader_autoinject.get_trader_type(npc)
 	if not valid_traders[trader] then
 		trace("npc %s, %s is not trader", npc:name(), npc:id())
-		return
+		return true
 	end
 
 	reset_trader_items()
