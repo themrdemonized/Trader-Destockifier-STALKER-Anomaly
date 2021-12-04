@@ -391,6 +391,10 @@ end
 
 -- Ammo
 items_after.ammo.collect = function(self, npc, item)
+	if settings[self.max_key] < 0 then
+		return
+	end
+	
 	if self.check(item) then
 		local sec = item:section()
 		local id = item:id()
@@ -406,8 +410,12 @@ items_after.ammo.collect = function(self, npc, item)
 end
 
 items_after.ammo.pick = function(self, npc)
+	if settings[self.max_key] < 0 then
+		return
+	end
+
 	if is_empty(self.trader) then
-		trace("%s table is empty, ignoring", key)
+		trace("%s table is empty, ignoring", self.key)
 		return
 	end
 
@@ -449,6 +457,10 @@ items_after.ammo.pick = function(self, npc)
 end
 
 items_after.ammo.remove = function(self, npc, item)
+	if settings[self.max_key] < 0 then
+		return
+	end
+
 	if is_empty(self.trader) then
 		return
 	end

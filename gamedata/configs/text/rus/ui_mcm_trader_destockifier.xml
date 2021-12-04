@@ -45,6 +45,9 @@
 	<string id="ui_mcm_trader_destockifier_max_ammo_percent">
 		<text>Процент аммуниции от изначального ассортимента</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_max_ammo_percent_desc">
+		<text>Установка на -10 не изменит аммуницию</text>
+	</string>
 	<string id="ui_mcm_trader_destockifier_sell_only_guns_ammo">
 		<text>Продавать только аммуницию к оружию в ассортименте</text>
 	</string>
