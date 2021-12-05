@@ -33,6 +33,7 @@ local settings = {
 	enable = true,
 	debug_mode = false,
 	max_guns = 3,
+	max_handguns = 3,
 	max_knives = 2,
 	max_outfits = 3,
 	max_weapon_attachments = 2,
@@ -193,7 +194,28 @@ end
 -- Items table
 local items = {
 	guns = create_items_table("guns", "max_guns", function(item)
-		return IsWeapon(item) and (not IsItem("fake_ammo_wpn",item:section()))
+		local sec = item:section()
+		local ignore_items = {
+			["w_pistol"] = true,
+			["WP_HPSA"]  = true,
+			["WP_PM"]    = true,
+			["WP_USP45"] = true,
+		}
+		return 	IsWeapon(item) and
+				not IsItem("fake_ammo_wpn",sec) and
+				not (ignore_items[SYS_GetParam(0, sec, "kind", 0)] or ignore_items[SYS_GetParam(0, sec, "class", 0)])
+	end),
+	handguns = create_items_table("handguns", "max_handguns", function(item)
+		local sec = item:section()
+		local valid_items = {
+			["w_pistol"] = true,
+			["WP_HPSA"]  = true,
+			["WP_PM"]    = true,
+			["WP_USP45"] = true,
+		}
+		return 	IsWeapon(item) and
+				not IsItem("fake_ammo_wpn",sec) and
+				(valid_items[SYS_GetParam(0, sec, "kind", 0)] or valid_items[SYS_GetParam(0, sec, "class", 0)])
 	end),
 	knives = create_items_table("knives", "max_knives", function(item)
 		return IsWeapon(item) and IsItem("fake_ammo_wpn",item:section())
@@ -564,7 +586,7 @@ function trader_autoinject.update(npc)
     TraderAuto(npc)
     if settings.enable then
 	    --nasty hack to make it last in monkey patching order
-		CreateTimeEvent("destockify" .. npc:id(), "destockify" .. npc:id(), 0.05, destockify, npc)
+		CreateTimeEvent("destockify" .. npc:id(), "destockify" .. npc:id(), 0.01, destockify, npc)
 	    --destockify(npc)
 	end
 end

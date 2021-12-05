@@ -25,7 +25,10 @@
 		</text>
 	</string>
 	<string id="ui_mcm_trader_destockifier_max_guns">
-		<text>Max amount of weapons in stock</text>
+		<text>Max amount of two-handed weapons in stock</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_handguns">
+		<text>Max amount of pistols in stock</text>
 	</string>
 	<string id="ui_mcm_trader_destockifier_max_knives">
 		<text>Max amount of knives in stock</text>

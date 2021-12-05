@@ -36,6 +36,7 @@ function trade_manager.update(npc, force_refresh)
     TraderUpdate(npc, force_refresh)
     local restock_time = game_difficulties.get_eco_factor("restock") or 24
     if force_refresh then restock_time = 0 end
+    printf("trader resupply, time %s, restock_time %s", reup_time and game.get_game_time():diffSec(t2c(reup_time)), restock_time * 3600)
 	if reup_time and game.get_game_time():diffSec(t2c(reup_time)) < (restock_time * 3600)  then
 		-- print_dbg("Not time to resupply yet!")
         return

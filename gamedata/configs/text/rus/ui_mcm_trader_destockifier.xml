@@ -25,7 +25,10 @@
 		</text>
 	</string>
 	<string id="ui_mcm_trader_destockifier_max_guns">
-		<text>Макс кол-во огнестрельного оружия на складе</text>
+		<text>Макс кол-во винтовок на складе</text>
+	</string>
+	<string id="ui_mcm_trader_destockifier_max_handguns">
+		<text>Макс кол-во пистолетов на складе</text>
 	</string>
 	<string id="ui_mcm_trader_destockifier_max_knives">
 		<text>Макс кол-во холодного оружия на складе</text>
