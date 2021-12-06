@@ -36,6 +36,9 @@
 	<string id="ui_mcm_trader_destockifier_max_outfits">
 		<text>Max amount of outfits in stock</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_max_helmets">
+		<text>Max amount of helmets in stock</text>
+	</string>
 	<string id="ui_mcm_trader_destockifier_max_weapon_attachments">
 		<text>Max amount of weapon attachments in stock</text>
 	</string>

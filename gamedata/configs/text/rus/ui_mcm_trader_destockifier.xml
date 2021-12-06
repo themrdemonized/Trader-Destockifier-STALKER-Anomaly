@@ -36,6 +36,9 @@
 	<string id="ui_mcm_trader_destockifier_max_outfits">
 		<text>Макс кол-во экипировки на складе</text>
 	</string>
+	<string id="ui_mcm_trader_destockifier_max_helmets">
+		<text>Макс кол-во шлемов на складе</text>
+	</string>
 	<string id="ui_mcm_trader_destockifier_max_weapon_attachments">
 		<text>Макс кол-во навесного оборудования для оружия</text>
 	</string>

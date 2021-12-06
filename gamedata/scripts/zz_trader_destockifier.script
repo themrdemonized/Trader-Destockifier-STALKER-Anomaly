@@ -29,25 +29,17 @@ end
 
 local table_insert = table.insert
 
-local settings = {
-	enable = true,
-	debug_mode = false,
-	max_guns = 3,
-	max_handguns = 3,
-	max_knives = 2,
-	max_outfits = 3,
-	max_weapon_attachments = 2,
-	max_backpacks = 2,
-	max_explosives = 6,
-	max_ammo_percent = 100,
-	sell_only_guns_ammo = false,
-	max_food = 10,
-	max_heal = 8,
-	max_repair = 8,
-	randomize = false,
-	randomize_deviation = 100,
-	max_mags = 5,
-}
+-- Load the defaults
+local settings = (function()
+	local t = {}
+	local op = trader_destockifier_mcm.op
+	for i, v in ipairs(op.gr) do
+		if v.def ~= nil then
+			t[v.id] = v.def
+		end
+	end
+	return t
+end)()
 
 --Utils
 local function trace(str, ...)
@@ -125,7 +117,6 @@ local function get_random_key_value(t, delete)
 end
 
 local function pick_item(trader, keep, max_key, key) -- default pick item function
-	local key = key or "item"
 	if is_empty(trader) then
 		trace("%s table is empty, ignoring", key)
 		return
@@ -220,8 +211,11 @@ local items = {
 	knives = create_items_table("knives", "max_knives", function(item)
 		return IsWeapon(item) and IsItem("fake_ammo_wpn",item:section())
 	end),
+	helmets = create_items_table("helmets", "max_helmets", function(item)
+		return IsHeadgear(item)
+	end),
 	outfits = create_items_table("outfits", "max_outfits", function(item)
-		return IsHeadgear(item) or IsOutfit(item)
+		return IsOutfit(item)
 	end),
 	weapon_attachments = create_items_table("weapon_attachments", "max_weapon_attachments", function(item)
 		local sec = item:section()
