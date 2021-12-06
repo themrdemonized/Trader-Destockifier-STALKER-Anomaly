@@ -17,7 +17,7 @@ function on_mcm_load()
 	        {id = "sell_only_guns_ammo", type = "check", val = 1, def = false},
 	        {id = "max_ammo_percent", type = "track", val = 2, min = -10, max = 100, step = 10, def = 100},
 	        {id = "divider", type = "line"},
-	        {id = "max_food", type = "track", val = 2, min = -1, max = 25, step = 1, def = 12},
+	        {id = "max_food", type = "track", val = 2, min = -1, max = 28, step = 1, def = 16},
 	        {id = "max_heal", type = "track", val = 2, min = -1, max = 28, step = 1, def = 18},
 	        {id = "max_repair", type = "track", val = 2, min = -1, max = 28, step = 1, def = 20},
 	        {id = "divider", type = "line"},

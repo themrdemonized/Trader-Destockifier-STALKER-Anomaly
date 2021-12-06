@@ -154,7 +154,7 @@ local item_cache = {}
 local function create_items_table(key, max_key, check_func, collect_func, pick_func, remove_func)
 	return {
 		key = key or "item",
-		max_key = max_key,
+		max_key = max_key or "max_item",
 		trader = {},
 		keep = {},
 		get_keep_item_id = function(self, item)
