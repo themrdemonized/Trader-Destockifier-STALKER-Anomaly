@@ -30,7 +30,7 @@ end
 local table_insert = table.insert
 
 -- Load the defaults
-local settings = (function()
+local function load_defaults()
 	local t = {}
 	local op = trader_destockifier_mcm.op
 	for i, v in ipairs(op.gr) do
@@ -39,7 +39,8 @@ local settings = (function()
 		end
 	end
 	return t
-end)()
+end
+local settings = load_defaults()
 
 --Utils
 local function trace(str, ...)
@@ -590,6 +591,8 @@ local function on_option_change()
 		for k, v in pairs(settings) do
 			settings[k] = ui_mcm.get("trader_destockifier/" .. k)
 		end
+	else
+		settings = load_defaults()
 	end
 end
 
