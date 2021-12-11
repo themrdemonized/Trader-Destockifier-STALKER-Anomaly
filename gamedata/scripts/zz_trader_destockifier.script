@@ -587,12 +587,11 @@ function trader_autoinject.update(npc)
 end
 
 local function on_option_change()
+	settings = load_defaults()
 	if ui_mcm then
 		for k, v in pairs(settings) do
 			settings[k] = ui_mcm.get("trader_destockifier/" .. k)
 		end
-	else
-		settings = load_defaults()
 	end
 end
 
