@@ -168,7 +168,7 @@ local function create_items_table(key, max_key, check_func, collect_func, pick_f
 			pick_item(self.trader, self.keep, self.max_key, self.key)
 		end,
 		remove = remove_func or function(self, npc, item)
-			if settings[self.max_key] == -1 then
+			if settings[self.max_key] and settings[self.max_key] == -1 then
 				trace("Maximum for %s set to -1, not removing", self.max_key)
 				return
 			end
@@ -220,9 +220,14 @@ local items = {
 	end),
 	weapon_attachments = create_items_table("weapon_attachments", "max_weapon_attachments", function(item)
 		local sec = item:section()
-		return 	SYS_GetParam(0, sec, "kind", 0) == "w_misc" and 
-				sec ~= "bolt" and
-				sec ~= "bolt_bullet"
+		local ignore_items = {
+			["bolt"] 				= true,
+			["bolt_bullet"] 		= true,
+			["trijicon_rmr"] 		= true,
+			["psicho_rmr"] 			= true,
+			["aimpoint_pro"] 		= true,
+		}
+		return 	SYS_GetParam(0, sec, "kind", 0) == "w_misc" and not ignore_items[sec]
 	end),
 	backpacks = create_items_table("backpacks", "max_backpacks", function(item)
 		return SYS_GetParam(0, item:section(), "kind", 0) == "i_backpack"
@@ -266,6 +271,16 @@ local items = {
 		}
 		return 	valid_items[SYS_GetParam(0, sec, "kind", 0)] and
 				sec ~= "bolts_pack"
+	end),
+	-- Junk remover
+	junk = create_items_table("junk", 0, function(item)
+		local sec = item:section()
+		local valid_items = {
+			["trijicon_rmr"] 		= true,
+			["psicho_rmr"] 			= true,
+			["aimpoint_pro"] 		= true,
+		}
+		return 	valid_items[sec]
 	end),
 	-- Mags Redux
 	mags = create_items_table("mags", "max_mags", function(item)
@@ -336,7 +351,7 @@ local function pick_by_mechanic(t, npc, trader_type, reduction_coeff)
 end
 
 local function remove_by_id(t, npc, item)
-	if settings[t.max_key] == -1 then
+	if settings[t.max_key] and settings[t.max_key] == -1 then
 		trace("Maximum for %s set to -1, not removing", t.max_key)
 		return
 	end
