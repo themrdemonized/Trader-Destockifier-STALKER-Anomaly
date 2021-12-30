@@ -30,7 +30,7 @@ jobs:
       - name: Pull & update submodules recursively
         run: |
           git submodule update --init --recursive
-          git submodule update --recursive --remote --merge --force
+          git submodule update --recursive --remote --force
           
       - name: Commit & push changes
         run: |
@@ -47,8 +47,13 @@ jobs:
           git config --global core.longpaths true
           git config --global user.name ${{ secrets.USER_NAME }}
           git config --global user.email ${{ secrets.USER_EMAIL }}
+          git add -A
           (git commit -am "Update dependencies") || true
           (git push) || true
+          
+      - name: Checkout submodules
+        run: |
+          git submodule update --init --recursive --remote
 
       - name: Zip folder 
         run: zip -r 'Trader_Destockifier.zip' gamedata readme.txt
