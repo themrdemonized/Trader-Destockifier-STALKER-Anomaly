@@ -269,8 +269,13 @@ local items = {
 			["i_tool"] 			= true,
 			["i_kit"] 			= true,
 		}
-		return 	valid_items[SYS_GetParam(0, sec, "kind", 0)] and
-				sec ~= "bolts_pack"
+		local ignore_sec = {
+			["bolts_pack"] = true,
+			["box_matches"] = true,
+			["matches"] = true,
+			["charcoal"] = true,
+		}
+		return 	valid_items[SYS_GetParam(0, sec, "kind", 0)] and not ignore_sec[sec]
 	end),
 	-- Junk remover
 	junk = create_items_table("junk", 0, function(item)
@@ -379,6 +384,62 @@ items.food.collect = function(self, npc, item)
 end
 
 items.food.pick = function(self, npc)
+	if is_empty(self.trader) then
+		trace("%s table is empty, ignoring", self.key)
+		return
+	end
+
+	local mandatory_drink = {
+		["flask"] = true,
+		["water_drink"] = true,
+	}
+
+	local mandatory_rad = {
+		["vodka"] = true,
+		["bottle_metal"] = true,
+		["cigarettes_russian"] = true,
+	}
+
+	local trader = self.trader
+	local t = self
+	local trader_max = settings[t.max_key] or 0
+
+	local trader_drink = {}
+	local trader_rad = {}
+	for k, v in pairs(trader) do
+		if mandatory_drink[v] then
+			trader_drink[k] = v
+		elseif mandatory_rad[v] then
+			trader_rad[k] = v
+		end
+	end
+
+	local max_items = math.min(trader_max, math.ceil(math.random() * 2))
+
+	local i = 0
+	while i < max_items and is_not_empty(trader_drink) do
+		local item = get_random_key_value(trader_drink, true)
+		trace("picked %s", t.key)
+		for k, v in pairs(item) do
+			trace("picked %s %s, id %s", t.key, k, v)
+			t.keep[k] = v
+			trader[k] = nil
+		end
+		i = i + 1
+	end
+
+	local i = 0
+	while i < max_items and is_not_empty(trader_rad) do
+		local item = get_random_key_value(trader_rad, true)
+		trace("picked %s", t.key)
+		for k, v in pairs(item) do
+			trace("picked %s %s, id %s", t.key, k, v)
+			t.keep[k] = v
+			trader[k] = nil
+		end
+		i = i + 1
+	end
+
 	pick_by_mechanic(self, npc, trader_autoinject.BARMAN)
 end
 
