@@ -1,21 +1,3 @@
-local alife_release = alife_release
-local copy_table = copy_table
-local CreateTimeEvent = CreateTimeEvent
-local dup_table = dup_table
-local empty_table = empty_table
-local ipairs = ipairs
-local is_empty = is_empty
-local is_not_empty = is_not_empty
-local IsAmmo = IsAmmo
-local IsHeadgear = IsHeadgear
-local IsOutfit = IsOutfit
-local IsWeapon = IsWeapon
-local pairs = pairs
-local printf = printf
-local round_idp = round_idp
-local SYS_GetParam = SYS_GetParam
-local type = type
-
 local get_ammo = utils_item.get_ammo
 
 local floor = math.floor
@@ -461,6 +443,7 @@ items.heal.pick = function(self, npc)
 	local mandatory_items = {
 		["bandage"] = true,
 		["medkit"] = true,
+		["drug_anabiotic"] = true,
 	}
 
 	local trader = self.trader
@@ -476,6 +459,7 @@ items.heal.pick = function(self, npc)
 
 	local max_bandage = math.min(trader_max, math.ceil(math.random() * math.random() * 2) + 1)
 	local max_medkit = math.min(trader_max, math.ceil(math.random() * math.random() * 3))
+	local max_anabiotics = math.min(trader_max, math.ceil(math.random() * math.random() * 2) + 1)
 
 	local i = 0
 	while i < max_bandage and is_not_empty(trader_sec.bandage) do
@@ -492,6 +476,18 @@ items.heal.pick = function(self, npc)
 	local i = 0
 	while i < max_medkit and is_not_empty(trader_sec.medkit) do
 		local item = get_random_key_value(trader_sec.medkit, true)
+		trace("picked %s", t.key)
+		for k, v in pairs(item) do
+			trace("picked %s %s, id %s", t.key, k, v)
+			t.keep[k] = v
+			trader[k] = nil
+		end
+		i = i + 1
+	end
+
+	local i = 0
+	while i < max_anabiotics and is_not_empty(trader_sec.drug_anabiotic) do
+		local item = get_random_key_value(trader_sec.drug_anabiotic, true)
 		trace("picked %s", t.key)
 		for k, v in pairs(item) do
 			trace("picked %s %s, id %s", t.key, k, v)
@@ -704,9 +700,25 @@ TraderAuto = trader_autoinject.update
 function trader_autoinject.update(npc)
     TraderAuto(npc)
     if settings.enable then
-	    --nasty hack to make it last in monkey patching order
-		CreateTimeEvent("destockify" .. npc:id(), "destockify" .. npc:id(), 0.01, destockify, npc)
-	    --destockify(npc)
+	    local GUI_on_show
+	    GUI_on_show = function(name, path)
+	    	if name == "UIInventory" then
+	    		destockify(npc)
+	    		UnregisterScriptCallback("GUI_on_show", GUI_on_show)
+	    		RemoveTimeEvent("destockify" .. npc:id(), "destockify" .. npc:id())
+	    		CreateTimeEvent("destockify" .. npc:id() .. "_1", 0, 0, function()
+	    			ui_inventory.GUI:UpdateInfo(true)
+	    			ui_inventory.GUI:TMode_ResetInventories(true)
+	    			return true
+	    		end)	    		
+	    	end
+	    end
+	    RegisterScriptCallback("GUI_on_show", GUI_on_show)
+	    CreateTimeEvent("destockify" .. npc:id(), "destockify" .. npc:id(), 1, function()
+	    	destockify(npc)
+	    	UnregisterScriptCallback("GUI_on_show", GUI_on_show)
+	    	return true
+	    end)
 	end
 end
 
